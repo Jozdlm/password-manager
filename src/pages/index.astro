@@ -9,7 +9,19 @@ const data = await response.json();
 <Layout title="Welcome to Astro.">
   <main>
     <h1>Contraseñas</h1>
-    {data.map((item: any) => <p>{item}</p>)}
+    {
+      data.map((item: any) => {
+        return (
+          <div>
+            <div>
+              <p>{item.url}</p>
+              <p>{item.username}</p>
+            </div>
+            <button>Ver</button>
+          </div>
+        );
+      })
+    }
   </main>
 </Layout>
 
