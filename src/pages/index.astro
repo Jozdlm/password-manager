@@ -8,20 +8,39 @@ const data = await response.json();
 
 <Layout title="Welcome to Astro.">
   <main>
-    <h1>Contraseñas</h1>
-    {
-      data.map((item: any) => {
-        return (
-          <div>
-            <div>
-              <p>{item.url}</p>
-              <p>{item.username}</p>
+    <div class="mb-8 flex justify-between items-end">
+      <div>
+        <h1 class="text-2xl font-medium">Contraseñas</h1>
+        <p class="text-gray-400 text-sm">
+          Todas tus contraseñas accesibles desde cualquier dispositivo
+        </p>
+      </div>
+      <div
+        class="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center"
+      >
+        <span>JM</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="flex justify-center p-4">
+        <button class="px-4 py-2 bg-slate-600 rounded">Añadir contraseña</button>
+      </div>
+
+      {
+        data.map((item: any) => {
+          return (
+            <div class="flex justify-between items-center border-b border-b-gray-600 py-3">
+              <div>
+                <p class="text-base">{item.url}</p>
+                <p class="text-gray-400">{item.username}</p>
+              </div>
+              <button>Ver más</button>
             </div>
-            <button>Ver</button>
-          </div>
-        );
-      })
-    }
+          );
+        })
+      }
+    </div>
   </main>
 </Layout>
 
@@ -29,10 +48,9 @@ const data = await response.json();
   main {
     margin: auto;
     padding: 1rem;
-    width: 800px;
+    width: 600px;
     max-width: calc(100% - 2rem);
     color: white;
-    font-size: 20px;
     line-height: 1.6;
   }
 </style>
