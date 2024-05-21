@@ -1,10 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { GET } from "./api/passwords";
+
+let response = await GET(Astro);
+const data = await response.json();
 ---
 
 <Layout title="Welcome to Astro.">
   <main>
     <h1>Contraseñas</h1>
+    {data.map((item: any) => <p>{item}</p>)}
   </main>
 </Layout>
 
