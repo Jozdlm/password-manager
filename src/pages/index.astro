@@ -1,4 +1,5 @@
 ---
+import UserMenu from "../components/UserMenu.astro";
 import Layout from "../layouts/Layout.astro";
 import { GET } from "./api/passwords";
 
@@ -16,11 +17,7 @@ const data = await response.json();
           dispositivo!
         </p>
       </div>
-      <div
-        class="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center"
-      >
-        <span>JM</span>
-      </div>
+      <UserMenu />
     </div>
 
     <div>
