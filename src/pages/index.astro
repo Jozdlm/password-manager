@@ -12,7 +12,8 @@ const data = await response.json();
       <div>
         <h1 class="text-2xl font-medium">Contraseñas</h1>
         <p class="text-gray-400 text-sm">
-          Todas tus contraseñas accesibles desde cualquier dispositivo
+          Todas tus contraseñas seguras y accesibles desde cualquier
+          dispositivo!
         </p>
       </div>
       <div
@@ -24,7 +25,7 @@ const data = await response.json();
 
     <div>
       <div class="flex justify-center mb-8">
-        <button class="px-4 py-2 bg-slate-600 rounded text-sm font-medium"
+        <button class="px-3 py-2 bg-slate-600 rounded-md text-sm font-medium"
           >Añadir contraseña</button
         >
       </div>
@@ -36,9 +37,9 @@ const data = await response.json();
               <div>
                 <p class="text-base">{item.url}</p>
 
-                <p class="text-gray-400">{item.username}</p>
+                <p class="text-gray-400 text-sm">{item.username}</p>
               </div>
-              <button>Ver más</button>
+              <button class="text-sm">Ver más</button>
             </div>
           );
         })
