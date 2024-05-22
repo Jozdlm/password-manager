@@ -59,5 +59,9 @@ const passwords: Password[] = [
 ];
 
 export const GET: APIRoute = () => {
-  return new Response(JSON.stringify(passwords));
+  return new Response(JSON.stringify(passwords), {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 };
