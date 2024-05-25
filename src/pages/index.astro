@@ -7,8 +7,8 @@ let response = await GET(Astro);
 const data = await response.json();
 ---
 
-<Layout title="Welcome to Astro.">
-  <main class="mx-auto max-w-[600px] text-white pt-8">
+<Layout title="Password Manager">
+  <main class="mx-auto max-w-[600px]">
     <div class="mb-8 flex justify-between items-end">
       <div>
         <h1 class="text-2xl font-medium">Contraseñas</h1>
@@ -22,8 +22,10 @@ const data = await response.json();
 
     <div>
       <div class="flex justify-center mb-8">
-        <button class="px-3 py-2 bg-slate-600 rounded-md text-sm font-medium"
-          >Añadir contraseña</button
+        <a
+          href="add-password"
+          class="px-3 py-2 bg-slate-600 rounded-md text-sm font-medium"
+          >Añadir contraseña</a
         >
       </div>
 
