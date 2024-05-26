@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import type { Password } from "../../common/interfaces/Password";
+import type { Password } from "../../lib/interfaces/password";
 
 const passwords: Password[] = [
   {
