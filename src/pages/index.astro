@@ -1,4 +1,5 @@
 ---
+import PasswordItem from "../components/PasswordItem.astro";
 import UserMenu from "../components/UserMenu.astro";
 import Layout from "../layouts/Layout.astro";
 import { GET } from "./api/passwords";
@@ -28,19 +29,9 @@ const data = await response.json();
           >Añadir contraseña</a
         >
       </div>
-
       {
         data.map((item: any) => {
-          return (
-            <div class="flex justify-between items-center border-b border-b-gray-600 py-3">
-              <div>
-                <p class="text-base">{item.url}</p>
-
-                <p class="text-gray-400 text-sm">{item.username}</p>
-              </div>
-              <button class="text-sm">Ver más</button>
-            </div>
-          );
+          return <PasswordItem item={item} />;
         })
       }
     </div>
