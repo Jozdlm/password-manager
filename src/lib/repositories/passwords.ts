@@ -51,3 +51,7 @@ const passwords: Password[] = [
 export const getPasswords = () => {
   return [...passwords];
 };
+
+export const getPasswordById = (id: string) => {
+  return passwords.find((item) => item.id === id);
+}
