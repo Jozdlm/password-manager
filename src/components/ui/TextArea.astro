@@ -1,0 +1,13 @@
+---
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+---
+
+<textarea
+  class="form-input py-2 px-3 rounded-md text-sm bg-transparent border border-slate-600 w-full max-h-[120px] min-h-10"
+  id={id}
+>
+</textarea>
