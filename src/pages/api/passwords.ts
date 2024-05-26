@@ -1,14 +1,5 @@
 import type { APIRoute } from "astro";
-
-interface Password {
-  id: string;
-  url: string;
-  username: string;
-  password: string;
-  categoryId: string;
-  note: string;
-  userId: string;
-}
+import type { Password } from "../../common/interfaces/Password";
 
 const passwords: Password[] = [
   {
