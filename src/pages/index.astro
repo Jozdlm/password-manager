@@ -1,39 +1,30 @@
 ---
-import PasswordItem from "../components/PasswordItem.astro";
-import UserMenu from "../components/UserMenu.astro";
 import Layout from "../layouts/Layout.astro";
-import { GET } from "./api/passwords";
-
-let response = await GET(Astro);
-const data = await response.json();
 ---
 
-<Layout title="Password Manager">
-  <main class="mx-auto max-w-[600px]">
-    <div class="mb-8 flex justify-between items-end">
-      <div>
-        <h1 class="text-2xl font-medium">Contraseñas</h1>
-        <p class="text-gray-400 text-sm">
-          Todas tus contraseñas seguras y accesibles desde cualquier
-          dispositivo!
-        </p>
-      </div>
-      <UserMenu />
+<Layout title="Password Manager - Home">
+  <main class="text-center mt-6 max-w-[640px] mx-auto">
+    <div class="flex justify-center py-6">
+      <img src="/lock.png" alt="Lock Image Icon" class="size-28 block" />
     </div>
-
-    <div>
-      <div class="flex justify-center mb-8">
-        <a
-          href="add-password"
-          class="px-3 py-2 bg-slate-600 rounded-md text-sm font-medium"
-          >Añadir contraseña</a
-        >
-      </div>
-      {
-        data.map((item: any) => {
-          return <PasswordItem item={item} />;
-        })
-      }
+    <h1 class="text-4xl font-medium mb-8">
+      Una forma segura y accesible para guardar tus contraseñas.
+    </h1>
+    <p class="text-gray-300 mb-16">
+      Puedes almacenar contraseñas, categorizar y generar contraseñas, además de
+      poder acceder a ellas desde tú computadora, tablet o teléfono.
+    </p>
+    <div class="flex gap-x-3 justify-center">
+      <a
+        href="/login"
+        class="bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-md font-medium"
+        >Iniciar Sesión</a
+      >
+      <a
+        href="/signup"
+        class="rounded-md font-medium py-2 px-4 border border-zinc-600 hover:bg-zinc-800"
+        >Crear cuenta</a
+      >
     </div>
   </main>
 </Layout>
