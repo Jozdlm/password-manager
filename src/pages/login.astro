@@ -1,7 +1,48 @@
 ---
+import Input from "../components/ui/Input.astro";
+import Label from "../components/ui/Label.astro";
 import Layout from "../layouts/Layout.astro";
+
+const { cookies, redirect } = Astro;
+
+const accessToken = cookies.get("sb-access-token");
+const refreshToken = cookies.get("sb-refresh-token");
+
+if (accessToken && refreshToken) {
+  return redirect("/app");
+}
 ---
 
-<Layout title="Password Manager - Login">
-  <h1>Iniciar Sesión</h1>
+<Layout title="Login - Password Manager">
+  <main class="mx-auto max-w-[400px]">
+    <img
+      src="/lock.png"
+      alt="Lock icon image"
+      class="block mb-6 size-16 mx-auto"
+    />
+    <h1 class="text-2xl mb-8 text-center font-medium">Bienvenido de nuevo</h1>
+
+    <form action="/api/auth/login" method="post" class="mb-12">
+      <div class="mb-4">
+        <Label label="Correo" forInput="email" />
+        <Input type="email" id="email" name="email" />
+      </div>
+
+      <div class="mb-8">
+        <Label label="Contraseña" forInput="password" />
+        <Input type="password" name="password" id="password" />
+      </div>
+
+      <button
+        type="submit"
+        class="bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-md font-medium text-sm w-full"
+        >Iniciar Sesión</button
+      >
+    </form>
+
+    <p class="text-sm text-gray-300 text-center">
+      ¿Todavía no tienes cuenta?
+      <a href="/signup" class="underline text-blue-300">Crear una cuenta</a>
+    </p>
+  </main>
 </Layout>
