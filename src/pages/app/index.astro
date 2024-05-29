@@ -2,10 +2,36 @@
 import PasswordItem from "../../components/PasswordItem.astro";
 import UserMenu from "../../components/UserMenu.astro";
 import Layout from "../../layouts/Layout.astro";
+import { supabase } from "../../lib/supabase";
 import { GET } from "../api/passwords";
 
 let response = await GET(Astro);
-const data = await response.json();
+const passwords = await response.json();
+
+const { cookies, redirect } = Astro;
+
+const accessToken = cookies.get("sb-access-token");
+const refreshToken = cookies.get("sb-refresh-token");
+
+if (!accessToken || !refreshToken) {
+  return redirect("/login");
+}
+
+const { data, error } = await supabase.auth.setSession({
+  refresh_token: refreshToken.value,
+  access_token: accessToken.value,
+});
+
+if (error) {
+  cookies.delete("sb-access-token", {
+    path: "/",
+  });
+  cookies.delete("sb-refresh-token", {
+    path: "/",
+  });
+
+  return redirect("/login");
+}
 ---
 
 <Layout title="Password Manager">
@@ -30,7 +56,7 @@ const data = await response.json();
         >
       </div>
       {
-        data.map((item: any) => {
+        passwords.map((item: any) => {
           return <PasswordItem item={item} />;
         })
       }
