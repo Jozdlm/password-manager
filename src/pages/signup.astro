@@ -2,6 +2,15 @@
 import Input from "../components/ui/Input.astro";
 import Label from "../components/ui/Label.astro";
 import Layout from "../layouts/Layout.astro";
+
+const { cookies, redirect } = Astro;
+
+const accessToken = cookies.get("sb-access-token");
+const refreshToken = cookies.get("sb-refresh-token");
+
+if (accessToken && refreshToken) {
+  return redirect("/app");
+}
 ---
 
 <Layout title="Sign Up - Password Manager">
