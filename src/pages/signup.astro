@@ -1,7 +1,40 @@
 ---
+import Input from "../components/ui/Input.astro";
+import Label from "../components/ui/Label.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="Password Manager - Sign Up">
-  <h1>Crear cuenta</h1>
+  <main class="mx-auto max-w-[400px]">
+    <img
+      src="/lock.png"
+      alt="Lock icon image"
+      class="block mb-6 size-16 mx-auto"
+    />
+
+    <h1 class="text-2xl mb-8 text-center font-medium">Crear una cuenta</h1>
+
+    <form action="/api/auth/register" method="post" class="mb-12">
+      <div class="mb-4">
+        <Label label="Correo" forInput="email" />
+        <Input type="email" id="email" name="email" />
+      </div>
+
+      <div class="mb-8">
+        <Label label="Contraseña" forInput="password" />
+        <Input type="password" name="password" id="password" />
+      </div>
+
+      <button
+        type="submit"
+        class="bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-md font-medium text-sm w-full"
+        >Registrarse</button
+      >
+    </form>
+
+    <p class="text-sm text-gray-300 text-center">
+      ¿Ya tienes una cuenta?
+      <a href="/login" class="underline text-blue-300">Iniciar Sesión</a>
+    </p>
+  </main>
 </Layout>
