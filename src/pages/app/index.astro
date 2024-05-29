@@ -8,7 +8,7 @@ import { GET } from "../api/passwords";
 let response = await GET(Astro);
 const passwords = await response.json();
 
-const { cookies, redirect } = Astro;
+const { cookies, redirect, url } = Astro;
 
 const accessToken = cookies.get("sb-access-token");
 const refreshToken = cookies.get("sb-refresh-token");
@@ -50,7 +50,7 @@ if (error) {
     <div>
       <div class="flex justify-center mb-8">
         <a
-          href="add-password"
+          href={url + "/add-password"}
           class="bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-md font-medium text-sm"
           >Añadir contraseña</a
         >
