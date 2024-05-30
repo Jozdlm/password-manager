@@ -1,0 +1,77 @@
+---
+import ArrowLeftIcon from "../../components/icons/ArrowLeftIcon.astro";
+import Input from "../../components/ui/Input.astro";
+import Label from "../../components/ui/Label.astro";
+import Layout from "../../layouts/Layout.astro";
+import { GET } from "../api/passwords/[id]";
+
+const { id } = Astro.params;
+
+let response = await GET(Astro);
+const data = await response.json();
+
+if (data?.error) {
+  return Astro.redirect("/");
+}
+---
+
+<Layout title="Password Manager">
+  <main class="mx-auto max-w-[600px]">
+    <section class="flex gap-x-3 items-center mb-4">
+      <a href="/" class="hover:bg-slate-700 p-2 rounded-full">
+        <ArrowLeftIcon />
+      </a>
+
+      <h1>{data.url}</h1>
+    </section>
+    <section class="bg-zinc-800 rounded-md p-6">
+      <div class="border-b border-b-zinc-600 mb-6 pb-6 grid grid-cols-2 gap-6">
+        <div>
+          <Label label="Usuario" forInput="username" />
+          <Input
+            type="text"
+            id="username"
+            name="username"
+            readonly
+            value={data.username}
+          />
+        </div>
+        <div>
+          <p class="text-sm mb-2">Sitio Web</p>
+          <a
+            href={`https://www.${data.url}/`}
+            target="_blank"
+            rel="noopener noreferer"
+            class="text-gray-300 underline hover:text-gray-100">{data.url}</a
+          >
+        </div>
+        <div>
+          <Label label="Contraseña" forInput="password" />
+          <Input
+            type="password"
+            id="password"
+            name="password"
+            readonly
+            value={data.password}
+          />
+        </div>
+        <div>
+          <p class="text-sm mb-2">Nota</p>
+          <p class="text-gray-300">
+            {data.note.trim() === "" ? "No hay ninguna nota" : data.note}
+          </p>
+        </div>
+      </div>
+      <div class="flex gap-x-2 justify-end">
+        <button
+          class="bg-zinc-800 hover:bg-red-800 hover:text-white text-red-400 py-2 px-4 rounded-md font-medium text-sm"
+          >Eliminar</button
+        >
+        <button
+          class="bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-md font-medium text-sm"
+          >Editar</button
+        >
+      </div>
+    </section>
+  </main>
+</Layout>
