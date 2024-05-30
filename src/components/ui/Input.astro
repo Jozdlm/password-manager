@@ -8,7 +8,7 @@ interface Props extends JSX.InputHTMLAttributes {
   id: string;
 }
 
-const { type, placeholder = "", name, id, value } = Astro.props;
+const { type, placeholder = "", name, id, value, readonly } = Astro.props;
 ---
 
 <input
@@ -18,4 +18,5 @@ const { type, placeholder = "", name, id, value } = Astro.props;
   id={id}
   name={name}
   value={value}
+  readonly={readonly || false}
 />

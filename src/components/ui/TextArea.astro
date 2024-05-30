@@ -1,13 +1,16 @@
 ---
-interface Props {
+import type { JSX } from "astro/jsx-runtime";
+
+interface Props extends JSX.TextareaHTMLAttributes {
   id: string;
 }
 
-const { id } = Astro.props;
+const { id, name = "" } = Astro.props;
 ---
 
 <textarea
   class="form-input py-2 px-3 rounded-md text-sm bg-transparent border border-slate-600 w-full max-h-[120px] min-h-10"
   id={id}
+  name={name}
 >
 </textarea>
