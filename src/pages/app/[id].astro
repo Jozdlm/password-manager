@@ -1,5 +1,6 @@
 ---
 import ArrowLeftIcon from "../../components/icons/ArrowLeftIcon.astro";
+import ClipboardIcon from "../../components/icons/ClipboardIcon.astro";
 import Input from "../../components/ui/Input.astro";
 import Label from "../../components/ui/Label.astro";
 import Layout from "../../layouts/Layout.astro";
@@ -52,15 +53,22 @@ if (error) {
     </section>
     <section class="bg-zinc-800 rounded-md p-6">
       <div class="border-b border-b-zinc-600 mb-6 pb-6 grid grid-cols-2 gap-6">
-        <div>
-          <Label label="Usuario" forInput="username" />
-          <Input
-            type="text"
-            id="username"
-            name="username"
-            readonly
-            value={data.username}
-          />
+        <div class="relative">
+          <div class="relative">
+            <Label label="Usuario" forInput="username" />
+            <Input
+              type="text"
+              id="username"
+              name="username"
+              readonly
+              value={data.username}
+            />
+          </div>
+          <div class="absolute bottom-[6px] right-2 flex items-center gap-x-2">
+            <button class="rounded-full p-1 hover:bg-zinc-700">
+              <ClipboardIcon />
+            </button>
+          </div>
         </div>
         <div>
           <p class="text-sm mb-2">Sitio Web</p>
@@ -71,15 +79,25 @@ if (error) {
             class="text-gray-300 underline hover:text-gray-100">{data.url}</a
           >
         </div>
-        <div>
-          <Label label="Contraseña" forInput="password" />
-          <Input
-            type="password"
-            id="password"
-            name="password"
-            readonly
-            value={data.password}
-          />
+        <div class="relative">
+          <div class="relative">
+            <Label forInput="password" label="Contraseña" />
+            <Input
+              type="password"
+              id="password"
+              name="password"
+              readonly
+              value={data.password}
+            />
+          </div>
+          <div class="absolute bottom-[6px] right-2 flex items-center gap-x-2">
+            <button type="button" class="text-sm" id="showPasswordBtn"
+              >Mostrar</button
+            >
+            <button class="rounded-full p-1 hover:bg-zinc-700">
+              <ClipboardIcon />
+            </button>
+          </div>
         </div>
         <div>
           <p class="text-sm mb-2">Nota</p>
@@ -109,6 +127,19 @@ if (error) {
   ) as HTMLButtonElement;
   const itemId = deleteButton.dataset["itemId"] as string;
   const apiEndpoint = `/api/passwords/${itemId}`;
+
+  const passwordInput = document.getElementById("password") as HTMLInputElement;
+  const showPasswordBtn = document.getElementById(
+    "showPasswordBtn"
+  ) as HTMLButtonElement;
+
+  showPasswordBtn.addEventListener("click", () => {
+    const type = passwordInput.type;
+    const label = showPasswordBtn.textContent;
+
+    passwordInput.type = type == "text" ? "password" : "text";
+    showPasswordBtn.textContent = label == "Mostrar" ? "Ocultar" : "Mostrar";
+  });
 
   deleteButton.addEventListener("click", async () => {
     const response = await fetch(apiEndpoint, {
