@@ -65,7 +65,10 @@ if (error) {
             />
           </div>
           <div class="absolute bottom-[6px] right-2 flex items-center gap-x-2">
-            <button class="rounded-full p-1 hover:bg-zinc-700">
+            <button
+              class="rounded-full p-1 hover:bg-zinc-700"
+              id="clipboardUsername"
+            >
               <ClipboardIcon />
             </button>
           </div>
@@ -94,7 +97,10 @@ if (error) {
             <button type="button" class="text-sm" id="showPasswordBtn"
               >Mostrar</button
             >
-            <button class="rounded-full p-1 hover:bg-zinc-700">
+            <button
+              class="rounded-full p-1 hover:bg-zinc-700"
+              id="clipboardPassword"
+            >
               <ClipboardIcon />
             </button>
           </div>
@@ -127,11 +133,27 @@ if (error) {
   ) as HTMLButtonElement;
   const itemId = deleteButton.dataset["itemId"] as string;
   const apiEndpoint = `/api/passwords/${itemId}`;
-
+  const usernameInput = document.getElementById("username") as HTMLInputElement;
   const passwordInput = document.getElementById("password") as HTMLInputElement;
   const showPasswordBtn = document.getElementById(
     "showPasswordBtn"
   ) as HTMLButtonElement;
+  const clipboardUsername = document.getElementById(
+    "clipboardUsername"
+  ) as HTMLButtonElement;
+  const clipboardPassword = document.getElementById(
+    "clipboardPassword"
+  ) as HTMLButtonElement;
+
+  clipboardUsername.addEventListener("click", async () => {
+    const text = usernameInput.value;
+    await navigator.clipboard.writeText(text);
+  });
+
+  clipboardPassword.addEventListener("click", async () => {
+    const text = passwordInput.value;
+    await navigator.clipboard.writeText(text);
+  });
 
   showPasswordBtn.addEventListener("click", () => {
     const type = passwordInput.type;
