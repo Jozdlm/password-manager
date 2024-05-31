@@ -90,7 +90,8 @@ if (error) {
       <div class="flex gap-x-2 justify-end">
         <button
           class="bg-zinc-800 hover:bg-red-800 hover:text-white text-red-400 py-2 px-4 rounded-md font-medium text-sm"
-          >Eliminar</button
+          id="deleteButton"
+          data-item-id={id}>Eliminar</button
         >
         <button
           class="bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-md font-medium text-sm"
@@ -100,3 +101,21 @@ if (error) {
     </section>
   </main>
 </Layout>
+
+<script>
+  const deleteButton = document.getElementById(
+    "deleteButton"
+  ) as HTMLButtonElement;
+  const itemId = deleteButton.dataset["itemId"] as string;
+  const apiEndpoint = `/api/passwords/${itemId}`;
+
+  deleteButton.addEventListener("click", async () => {
+    const response = await fetch(apiEndpoint, {
+      method: "DELETE",
+    });
+
+    if (response.redirected) {
+      window.location.assign(response.url);
+    }
+  });
+</script>
