@@ -30,3 +30,17 @@ export const GET: APIRoute = async ({ params, redirect }) => {
     },
   });
 };
+
+export const DELETE: APIRoute = async ({ params, redirect }) => {
+  const id = params.id as string;
+
+  const { error } = await supabase.from("passwords").delete().eq("id", id);
+
+  if (error) {
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+    });
+  }
+
+  return redirect("/");
+};
