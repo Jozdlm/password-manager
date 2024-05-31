@@ -18,6 +18,7 @@ if (data?.error) {
 
 const accessToken = cookies.get("sb-access-token");
 const refreshToken = cookies.get("sb-refresh-token");
+const websiteUrl = `https://www.${data.url}/`;
 
 if (!accessToken || !refreshToken) {
   return redirect("/login");
@@ -64,7 +65,7 @@ if (error) {
         <div>
           <p class="text-sm mb-2">Sitio Web</p>
           <a
-            href={`https://www.${data.url}/`}
+            href={websiteUrl}
             target="_blank"
             rel="noopener noreferer"
             class="text-gray-300 underline hover:text-gray-100">{data.url}</a
