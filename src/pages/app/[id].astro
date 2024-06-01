@@ -113,16 +113,23 @@ if (error) {
           </p>
         </div>
       </div>
-      <div class="flex gap-x-2 justify-end">
-        <button
-          class="bg-zinc-800 hover:bg-red-800 hover:text-white text-red-400 py-2 px-4 rounded-md font-medium text-sm"
-          id="deleteButton"
-          data-item-id={id}>Eliminar</button
-        >
+      <div class="flex gap-x-2 justify-between">
         <a
-          class="bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-md font-medium text-sm"
-          href={updateUrlPage}>Editar</a
+          type="button"
+          class="rounded-lg text-sm py-2 px-3 hover:bg-zinc-700 font-medium text-gray-200 hover:text-white"
+          href="/">Cancelar</a
         >
+        <div class="flex gap-x-2">
+          <button
+            class="bg-zinc-800 hover:bg-red-800 hover:text-white text-red-400 py-2 px-4 rounded-md font-medium text-sm"
+            id="deleteButton"
+            data-item-id={id}>Eliminar</button
+          >
+          <a
+            class="bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-md font-medium text-sm"
+            href={updateUrlPage}>Editar</a
+          >
+        </div>
       </div>
     </section>
   </main>
