@@ -20,7 +20,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
   if (error) {
     return new Response(JSON.stringify({ error: error.message }), {
-      status: 5000,
+      status: 500,
     });
   }
 
