@@ -19,7 +19,7 @@ if (data?.error) {
 
 const accessToken = cookies.get("sb-access-token");
 const refreshToken = cookies.get("sb-refresh-token");
-const websiteUrl = `https://www.${data.url}/`;
+const websitePlaceholder = new URL(data.url).hostname;
 const updateUrlPage = `/app/update-password/${id}`;
 
 if (!accessToken || !refreshToken) {
@@ -50,7 +50,7 @@ if (error) {
         <ArrowLeftIcon />
       </a>
 
-      <h1>{data.url}</h1>
+      <h1>{websitePlaceholder}</h1>
     </section>
     <section class="bg-zinc-800 rounded-md p-6">
       <div class="border-b border-b-zinc-600 mb-6 pb-6 grid grid-cols-2 gap-6">
@@ -77,10 +77,10 @@ if (error) {
         <div>
           <p class="text-sm mb-2">Sitio Web</p>
           <a
-            href={websiteUrl}
+            href={data.url}
             target="_blank"
             rel="noopener noreferer"
-            class="text-gray-300 underline hover:text-gray-100">{data.url}</a
+            class="text-gray-300 underline hover:text-gray-100">{websitePlaceholder}</a
           >
         </div>
         <div class="relative">
