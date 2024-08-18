@@ -26,12 +26,10 @@ const { url } = Astro;
 
     <div>
       <div class="flex justify-center mb-8">
-        <Button asChild>
-          <a
-            href={url + "/add-password"}
-            class={buttonVariants({ variant: "primary" })}>Añadir Contraseña</a
-          >
-        </Button>
+        <a
+          href={url + "/add-password"}
+          class={buttonVariants({ variant: "primary" })}>Añadir Contraseña</a
+        >
       </div>
       {
         passwords.map((item: any) => {
