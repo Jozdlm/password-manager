@@ -4,11 +4,10 @@ import ClipboardIcon from "../../components/icons/ClipboardIcon.astro";
 import Input from "../../components/ui/Input.astro";
 import Label from "../../components/ui/Label.astro";
 import Layout from "../../layouts/Layout.astro";
-import { supabase } from "../../lib/supabase";
 import { GET } from "../api/passwords/[id]";
 
-const { cookies, redirect } = Astro;
 const { id } = Astro.params;
+const updateUrlPage = `/app/update-password/${id}`;
 
 let response = await GET(Astro);
 const data = await response.json();
@@ -17,30 +16,7 @@ if (data?.error) {
   return Astro.redirect("/");
 }
 
-const accessToken = cookies.get("sb-access-token");
-const refreshToken = cookies.get("sb-refresh-token");
 const websitePlaceholder = new URL(data.url).hostname;
-const updateUrlPage = `/app/update-password/${id}`;
-
-if (!accessToken || !refreshToken) {
-  return redirect("/login");
-}
-
-const { error } = await supabase.auth.setSession({
-  refresh_token: refreshToken.value,
-  access_token: accessToken.value,
-});
-
-if (error) {
-  cookies.delete("sb-access-token", {
-    path: "/",
-  });
-  cookies.delete("sb-refresh-token", {
-    path: "/",
-  });
-
-  return redirect("/login");
-}
 ---
 
 <Layout title="Password Manager">
@@ -80,7 +56,8 @@ if (error) {
             href={data.url}
             target="_blank"
             rel="noopener noreferer"
-            class="text-gray-300 underline hover:text-gray-100">{websitePlaceholder}</a
+            class="text-gray-300 underline hover:text-gray-100"
+            >{websitePlaceholder}</a
           >
         </div>
         <div class="relative">

@@ -3,41 +3,16 @@ import ArrowLeftIcon from "../../../components/icons/ArrowLeftIcon.astro";
 import Input from "../../../components/ui/Input.astro";
 import Label from "../../../components/ui/Label.astro";
 import Layout from "../../../layouts/Layout.astro";
-import { supabase } from "../../../lib/supabase";
 import { GET } from "../../api/passwords/[id]";
 
-const { cookies, redirect } = Astro;
 const { id } = Astro.params;
+const detailsUrlPage = `/app/${id}`;
 
 let response = await GET(Astro);
 const data = await response.json();
 
 if (data?.error) {
   return Astro.redirect("/");
-}
-
-const accessToken = cookies.get("sb-access-token");
-const refreshToken = cookies.get("sb-refresh-token");
-const detailsUrlPage = `/app/${id}`;
-
-if (!accessToken || !refreshToken) {
-  return redirect("/login");
-}
-
-const { error } = await supabase.auth.setSession({
-  refresh_token: refreshToken.value,
-  access_token: accessToken.value,
-});
-
-if (error) {
-  cookies.delete("sb-access-token", {
-    path: "/",
-  });
-  cookies.delete("sb-refresh-token", {
-    path: "/",
-  });
-
-  return redirect("/login");
 }
 ---
 
