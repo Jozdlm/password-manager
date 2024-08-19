@@ -1,0 +1,18 @@
+---
+import { buttonVariants } from "./ui/button";
+---
+
+<div class="w-[1000px] mx-auto flex justify-between">
+  <section>
+    <p class="font-medium">Secret Saver</p>
+  </section>
+  <nav>
+    <a href="/" class={buttonVariants({ variant: "link" })}>Inicio</a>
+    <a href="/login" class={buttonVariants({ variant: "link" })}
+      >Iniciar Sesión</a
+    >
+    <a href="/signup" class={buttonVariants({ variant: "link" })}
+      >Crear Cuenta</a
+    >
+  </nav>
+</div>
