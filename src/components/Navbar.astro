@@ -1,21 +1,37 @@
 ---
 import { buttonVariants } from "./ui/button";
+
+interface NavItemLink {
+  path: string;
+  name: string;
+}
+
+const navItemLinks: NavItemLink[] = [
+  { path: "/", name: "Inicio" },
+  { path: "/features", name: "Características" },
+  { path: "/pricing", name: "Precios" },
+];
 ---
 
-<div class="w-[1000px] mx-auto flex justify-between">
-  <section>
-    <a href="/" class="font-medium">Secret Saver</a>
+<div class="w-[1200px] mx-auto flex justify-between">
+  <section class="flex gap-x-12 items-center">
+    <a href="/" class="font-medium text-lg">Secret Saver</a>
+    <nav>
+      {
+        navItemLinks.map((item) => (
+          <a href={item.path} class={buttonVariants({ variant: "link" })}>
+            {item.name}
+          </a>
+        ))
+      }
+    </nav>
   </section>
-  <nav>
-    <a href="/" class={buttonVariants({ variant: "link" })}>Inicio</a>
-    <a href="/features" class={buttonVariants({ variant: "link" })}
-      >Características</a
-    >
-    <a href="/login" class={buttonVariants({ variant: "link" })}
+  <section>
+    <a href="/login" class={buttonVariants({ variant: "outline" })}
       >Iniciar Sesión</a
     >
-    <a href="/signup" class={buttonVariants({ variant: "link" })}
+    <a href="/signup" class={buttonVariants({ variant: "primary" })}
       >Crear Cuenta</a
     >
-  </nav>
+  </section>
 </div>
