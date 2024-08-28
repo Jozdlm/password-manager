@@ -1,14 +1,12 @@
 ---
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import PasswordItem from "../../components/PasswordItem.astro";
 import UserMenu from "../../components/UserMenu.astro";
 import Layout from "../../layouts/Layout.astro";
-import { GET } from "../api/passwords";
+import { getPasswords } from "@/data/passwords";
 
-let response = await GET(Astro);
-const passwords = await response.json();
-
-const { url } = Astro;
+const addPasswordUrl = new URL("/app/add-password", Astro.url);
+const passwords = await getPasswords();
 ---
 
 <Layout title="Password Manager">
@@ -27,12 +25,12 @@ const { url } = Astro;
     <div>
       <div class="flex justify-center mb-8">
         <a
-          href={url + "/add-password"}
+          href={addPasswordUrl}
           class={buttonVariants({ variant: "primary" })}>Añadir Contraseña</a
         >
       </div>
       {
-        passwords.map((item: any) => {
+        passwords.map((item) => {
           return <PasswordItem item={item} />;
         })
       }
