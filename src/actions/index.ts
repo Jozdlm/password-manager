@@ -1,4 +1,4 @@
-import type { Password } from "@/lib/interfaces/password";
+import type { InsertPassword, Password } from "@/lib/interfaces/password";
 import { supabase } from "@/lib/supabase";
 import { ActionError, defineAction } from "astro:actions";
 import { z } from "astro:schema";
@@ -58,7 +58,37 @@ export const server = {
       return passwords[0] as Password;
     },
   }),
+  addPassword: defineAction({
+    accept: "form",
+    input: z.object({
+      url: z.string(),
+      username: z.string(),
+      password: z.string(),
+      note: z
+        .string()
+        .nullable()
+        .transform((val) => val ?? ""),
+    }),
+    handler: async (form) => {
+      const { session } = (await supabase.auth.getSession()).data;
+
+      if (!session) throw new ActionError({ code: "FORBIDDEN" });
+
+      const newPassword: InsertPassword = {
+        ...form,
+        user_id: session.user.id,
+      };
+
+      const { error } = await supabase.from("passwords").insert(newPassword);
+
+      if (error)
+        throw new ActionError({ code: "BAD_REQUEST", message: error.message });
+
+      return { success: true };
+    },
+  }),
   deletePasswordById: defineAction({
+    // TODO: Change to z.object
     input: z.string(),
     handler: async (passwordId) => {
       const { error } = await supabase
