@@ -10,7 +10,7 @@ const { id } = Astro.params;
 const updateUrlPage = `/app/update-password/${id}`;
 
 const {data, error} = await actions.getPasswordById(id);
-if (!data && error) {
+if (!data || error) {
   return Astro.redirect("/");
 }
 
