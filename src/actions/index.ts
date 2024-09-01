@@ -72,4 +72,15 @@ export const server = {
       return { success: true };
     },
   }),
+  logout: defineAction({
+    accept: "form",
+    handler: (_, ctx) => {
+      ctx.cookies.delete("sb-access-token", { path: "/" });
+      ctx.cookies.delete("sb-refresh-token", { path: "/" });
+
+      console.log(ctx.cookies.get("sb-refresh-token"));
+
+      return { success: true };
+    },
+  }),
 };
