@@ -35,17 +35,3 @@ export const POST: APIRoute = async ({ params, redirect, request }) => {
 
   return redirect(`/app/${id}`);
 };
-
-export const DELETE: APIRoute = async ({ params, redirect }) => {
-  const id = params.id as string;
-
-  const { error } = await supabase.from("passwords").delete().eq("id", id);
-
-  if (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
-    });
-  }
-
-  return redirect("/");
-};

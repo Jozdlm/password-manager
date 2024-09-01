@@ -58,4 +58,18 @@ export const server = {
       return passwords[0] as Password;
     },
   }),
+  deletePasswordById: defineAction({
+    input: z.string(),
+    handler: async (passwordId) => {
+      const { error } = await supabase
+        .from("passwords")
+        .delete()
+        .eq("id", passwordId);
+
+      if (error)
+        throw new ActionError({ code: "BAD_REQUEST", message: error.message });
+
+      return { success: true };
+    },
+  }),
 };

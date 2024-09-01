@@ -15,6 +15,11 @@ if (!data || error) {
 }
 
 const websitePlaceholder = new URL(data.url).hostname;
+
+const deleteResult = await Astro.getActionResult(actions.deletePasswordById);
+if (deleteResult && !deleteResult.error) {
+  return Astro.redirect('/app');
+}
 ---
 
 <Layout title="Password Manager">
@@ -26,7 +31,7 @@ const websitePlaceholder = new URL(data.url).hostname;
 
       <h1>{websitePlaceholder}</h1>
     </section>
-    <section class="bg-zinc-800 rounded-md p-6">
+    <section class="bg-zinc-800 rounded-md p-6 mb-8">
       <div class="border-b border-b-zinc-600 mb-6 pb-6 grid grid-cols-2 gap-6">
         <div class="relative">
           <div class="relative">
@@ -95,11 +100,13 @@ const websitePlaceholder = new URL(data.url).hostname;
           href="/">Cancelar</a
         >
         <div class="flex gap-x-2">
-          <button
-            class="bg-zinc-800 hover:bg-red-800 hover:text-white text-red-400 py-2 px-4 rounded-md font-medium text-sm"
-            id="deleteButton"
-            data-item-id={id}>Eliminar</button
-          >
+          <form method="post" action={actions.deletePasswordById(id)}>
+            <button
+              class="bg-zinc-800 hover:bg-red-800 hover:text-white text-red-400 py-2 px-4 rounded-md font-medium text-sm"
+              id="deleteButton"
+              data-item-id={id}>Eliminar</button
+            >
+          </form>
           <a
             class="bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-md font-medium text-sm"
             href={updateUrlPage}>Editar</a
@@ -107,6 +114,11 @@ const websitePlaceholder = new URL(data.url).hostname;
         </div>
       </div>
     </section>
+    {deleteResult?.error && (
+      <section class="bg-red-950 text-red-300 p-3 rounded text-center">
+        <p>Se ha producido un error al intentar eliminar la contraseña. Por favor inténtalo más tarde.</p>
+      </section>
+    )}
   </main>
 </Layout>
 
@@ -144,15 +156,5 @@ const websitePlaceholder = new URL(data.url).hostname;
 
     passwordInput.type = type == "text" ? "password" : "text";
     showPasswordBtn.textContent = label == "Mostrar" ? "Ocultar" : "Mostrar";
-  });
-
-  deleteButton.addEventListener("click", async () => {
-    const response = await fetch(apiEndpoint, {
-      method: "DELETE",
-    });
-
-    if (response.redirected) {
-      window.location.assign(response.url);
-    }
   });
 </script>
