@@ -1,12 +1,16 @@
 ---
 import { actions } from "astro:actions";
-import ArrowLeftIcon from "../../components/icons/ArrowLeftIcon.astro";
-import ClipboardIcon from "../../components/icons/ClipboardIcon.astro";
-import Input from "../../components/ui/Input.astro";
-import Label from "../../components/ui/Label.astro";
-import Layout from "../../layouts/Layout.astro";
+import ArrowLeftIcon from "../../../components/icons/ArrowLeftIcon.astro";
+import ClipboardIcon from "../../../components/icons/ClipboardIcon.astro";
+import Input from "../../../components/ui/Input.astro";
+import Label from "../../../components/ui/Label.astro";
+import Layout from "../../../layouts/Layout.astro";
 
 const { id } = Astro.params;
+if (!id) {
+  return Astro.redirect('/');
+}
+
 const updateUrlPage = `/app/update-password/${id}`;
 
 const {data, error} = await actions.getPasswordById(id);
@@ -16,7 +20,7 @@ if (!data || error) {
 
 const websitePlaceholder = new URL(data.url).hostname;
 
-const deleteResult = await Astro.getActionResult(actions.deletePasswordById);
+const deleteResult = Astro.getActionResult(actions.deletePasswordById);
 if (deleteResult && !deleteResult.error) {
   return Astro.redirect('/app');
 }
@@ -100,11 +104,12 @@ if (deleteResult && !deleteResult.error) {
           href="/">Cancelar</a
         >
         <div class="flex gap-x-2">
-          <form method="post" action={actions.deletePasswordById(id)}>
+          <form method="post" action={actions.deletePasswordById}>
+            <input type="text" value={id} hidden>
             <button
               class="bg-zinc-800 hover:bg-red-800 hover:text-white text-red-400 py-2 px-4 rounded-md font-medium text-sm"
               id="deleteButton"
-              data-item-id={id}>Eliminar</button
+              type="submit">Eliminar</button
             >
           </form>
           <a
