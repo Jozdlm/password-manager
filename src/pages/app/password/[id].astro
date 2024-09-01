@@ -18,7 +18,10 @@ if (!data || error) {
   return Astro.redirect("/");
 }
 
-const websitePlaceholder = new URL(data.url).hostname;
+let websitePlaceholder = data.url;
+if (URL.canParse(data.url)) {
+  websitePlaceholder = new URL(data.url).hostname;
+}
 
 const deleteResult = Astro.getActionResult(actions.deletePasswordById);
 if (deleteResult && !deleteResult.error) {
@@ -132,7 +135,6 @@ if (deleteResult && !deleteResult.error) {
     "deleteButton"
   ) as HTMLButtonElement;
   const itemId = deleteButton.dataset["itemId"] as string;
-  const apiEndpoint = `/api/passwords/${itemId}`;
   const usernameInput = document.getElementById("username") as HTMLInputElement;
   const passwordInput = document.getElementById("password") as HTMLInputElement;
   const showPasswordBtn = document.getElementById(
