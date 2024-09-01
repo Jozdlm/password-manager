@@ -1,9 +1,9 @@
 ---
 import { buttonVariants } from "@/components/ui/button";
-import PasswordItem from "../../components/PasswordItem.astro";
 import UserMenu from "../../components/UserMenu.astro";
 import Layout from "../../layouts/Layout.astro";
 import { actions } from "astro:actions";
+import PasswordList from "@/components/PasswordList.astro";
 
 const addPasswordUrl = new URL("/app/add-password", Astro.url);
 const {error, data: passwords} = await actions.getPasswords();
@@ -35,9 +35,7 @@ const {error, data: passwords} = await actions.getPasswords();
             <p class="text-lg font-medium">Tenemos problemas para cargar tus contraseñas, por favor intentalo en unos minutos</p>
           </div>
         ) :
-        passwords.map((item) => {
-          return <PasswordItem item={item} />;
-        })
+        <PasswordList passwords={passwords} />
       }
     </div>
   </main>
