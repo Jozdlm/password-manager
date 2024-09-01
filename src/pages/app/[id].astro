@@ -1,18 +1,16 @@
 ---
+import { actions } from "astro:actions";
 import ArrowLeftIcon from "../../components/icons/ArrowLeftIcon.astro";
 import ClipboardIcon from "../../components/icons/ClipboardIcon.astro";
 import Input from "../../components/ui/Input.astro";
 import Label from "../../components/ui/Label.astro";
 import Layout from "../../layouts/Layout.astro";
-import { GET } from "../api/passwords/[id]";
 
 const { id } = Astro.params;
 const updateUrlPage = `/app/update-password/${id}`;
 
-let response = await GET(Astro);
-const data = await response.json();
-
-if (data?.error) {
+const {data, error} = await actions.getPasswordById(id);
+if (!data && error) {
   return Astro.redirect("/");
 }
 
