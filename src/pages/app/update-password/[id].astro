@@ -6,7 +6,11 @@ import Label from "../../../components/ui/Label.astro";
 import Layout from "../../../layouts/Layout.astro";
 
 const { id } = Astro.params;
-const detailsUrlPage = `/app/${id}`;
+if (!id) {
+  return Astro.redirect('/');
+}
+
+const detailsUrlPage = `/app/password/${id}`;
 
 const {data, error} = await actions.getPasswordById(id);
 if (!data && error) {
