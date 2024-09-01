@@ -108,7 +108,7 @@ if (deleteResult && !deleteResult.error) {
         >
         <div class="flex gap-x-2">
           <form method="post" action={actions.deletePasswordById}>
-            <input type="text" value={id} hidden>
+            <input type="text" name="passwordId" value={id} hidden>
             <button
               class="bg-zinc-800 hover:bg-red-800 hover:text-white text-red-400 py-2 px-4 rounded-md font-medium text-sm"
               id="deleteButton"

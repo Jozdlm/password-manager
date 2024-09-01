@@ -88,9 +88,11 @@ export const server = {
     },
   }),
   deletePasswordById: defineAction({
-    // TODO: Change to z.object
-    input: z.string(),
-    handler: async (passwordId) => {
+    accept: "form",
+    input: z.object({
+      passwordId: z.string(),
+    }),
+    handler: async ({passwordId}) => {
       const { error } = await supabase
         .from("passwords")
         .delete()
