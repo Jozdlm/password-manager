@@ -1,7 +1,7 @@
 ---
-import Navbar from "@/components/Navbar.astro";
-import Topbar from "@/components/Topbar.astro";
 import "@/styles/globals.css";
+import AppLayout from "./AppLayout.astro";
+import WebLayout from "./WebLayout.astro";
 
 interface Props {
   title: string;
@@ -47,19 +47,9 @@ const isPrivateRoute = pathname.includes("/app");
   </head>
   <body class="text-white pt-6 bg-zinc-950">
     {
-      isPrivateRoute ? (
-        <div class="mx-auto max-w-[800px]">
-          <Topbar />
-          <slot />
-        </div>
-      ) : (
-        <>
-          <Navbar />
-          <div class="w-[800px] mx-auto mt-6">
-            <slot />
-          </div>
-        </>
-      )
+      isPrivateRoute 
+        ?  <AppLayout><slot /></AppLayout>  
+        : <WebLayout><slot /></WebLayout>
     }
   </body>
 </html>
