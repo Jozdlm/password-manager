@@ -1,5 +1,6 @@
 ---
 import Navbar from "@/components/Navbar.astro";
+import Topbar from "@/components/Topbar.astro";
 import "@/styles/globals.css";
 
 interface Props {
@@ -47,7 +48,10 @@ const isPrivateRoute = pathname.includes("/app");
   <body class="text-white pt-6 bg-zinc-950">
     {
       isPrivateRoute ? (
-        <slot />
+        <div class="mx-auto max-w-[800px]">
+          <Topbar />
+          <slot />
+        </div>
       ) : (
         <>
           <Navbar />

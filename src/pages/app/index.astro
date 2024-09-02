@@ -1,6 +1,5 @@
 ---
 import { buttonVariants } from "@/components/ui/button";
-import UserMenu from "../../components/UserMenu.astro";
 import Layout from "../../layouts/Layout.astro";
 import { actions } from "astro:actions";
 import PasswordList from "@/components/PasswordList.astro";
@@ -11,17 +10,6 @@ const {error, data: passwords} = await actions.getPasswords();
 
 <Layout title="Password Manager">
   <main class="mx-auto max-w-[600px]">
-    <div class="mb-8 flex justify-between items-end">
-      <div>
-        <h1 class="text-2xl font-medium">Contraseñas</h1>
-        <p class="text-gray-400 text-sm">
-          Todas tus contraseñas seguras y accesibles desde cualquier
-          dispositivo!
-        </p>
-      </div>
-      <UserMenu />
-    </div>
-
     <div>
       <div class="flex justify-center mb-8">
         <a
