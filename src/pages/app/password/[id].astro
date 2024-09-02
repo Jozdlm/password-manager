@@ -5,6 +5,14 @@ import ClipboardIcon from "../../../components/icons/ClipboardIcon.astro";
 import Layout from "../../../layouts/Layout.astro";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { buttonVariants } from "@/components/ui/button";
 
 const { id } = Astro.params;
 if (!id) {
@@ -30,16 +38,20 @@ if (deleteResult && !deleteResult.error) {
 ---
 
 <Layout title="Password Manager">
-  <main class="mx-auto max-w-[600px]">
-    <section class="flex gap-x-3 items-center mb-4">
-      <a href="/" class="hover:bg-slate-700 p-2 rounded-full">
-        <ArrowLeftIcon />
-      </a>
-
-      <h1>{websitePlaceholder}</h1>
-    </section>
-    <section class="bg-zinc-800 rounded-md p-6 mb-8">
-      <div class="border-b border-b-zinc-600 mb-6 pb-6 grid grid-cols-2 gap-6">
+  <Card>
+    <CardHeader>
+      <CardTitle className="flex items-center gap-x-4">
+        <a
+          type="button"
+          class={buttonVariants({variant: "ghost", size: 'icon'})}
+          href="/">
+          <ArrowLeftIcon />
+        </a>
+        <p>{websitePlaceholder}</p>
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <div class="grid grid-cols-2 gap-6">
         <div class="relative w-full max-w-sm items-center">
           <div class="relative grid gap-1.5 ">
             <Label htmlFor="username">Usuario</Label>
@@ -100,34 +112,27 @@ if (deleteResult && !deleteResult.error) {
           </p>
         </div>
       </div>
-      <div class="flex gap-x-2 justify-between">
-        <a
-          type="button"
-          class="rounded-lg text-sm py-2 px-3 hover:bg-zinc-700 font-medium text-gray-200 hover:text-white"
-          href="/">Cancelar</a
+      {deleteResult?.error && (
+        <section class="bg-red-950 text-red-300 p-3 rounded text-center">
+          <p>Se ha producido un error al intentar eliminar la contraseña. Por favor inténtalo más tarde.</p>
+        </section>
+      )}
+    </CardContent>
+    <CardFooter className="flex gap-x-2 justify-end">
+      <form method="post" action={actions.deletePasswordById}>
+        <input type="text" name="passwordId" value={id} hidden>
+        <button
+          class={buttonVariants({variant: 'destructive'})}
+          id="deleteButton"
+          type="submit">Eliminar</button
         >
-        <div class="flex gap-x-2">
-          <form method="post" action={actions.deletePasswordById}>
-            <input type="text" name="passwordId" value={id} hidden>
-            <button
-              class="bg-zinc-800 hover:bg-red-800 hover:text-white text-red-400 py-2 px-4 rounded-md font-medium text-sm"
-              id="deleteButton"
-              type="submit">Eliminar</button
-            >
-          </form>
-          <a
-            class="bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-md font-medium text-sm"
-            href={updateUrlPage}>Editar</a
-          >
-        </div>
-      </div>
-    </section>
-    {deleteResult?.error && (
-      <section class="bg-red-950 text-red-300 p-3 rounded text-center">
-        <p>Se ha producido un error al intentar eliminar la contraseña. Por favor inténtalo más tarde.</p>
-      </section>
-    )}
-  </main>
+      </form>
+      <a
+        class={buttonVariants({variant: 'primary'})}
+        href={updateUrlPage}>Editar</a
+      >
+    </CardFooter>
+  </Card>
 </Layout>
 
 <script>

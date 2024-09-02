@@ -4,6 +4,9 @@ import ArrowLeftIcon from "../../../components/icons/ArrowLeftIcon.astro";
 import Layout from "../../../layouts/Layout.astro";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { buttonVariants, Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
 
 const { id } = Astro.params;
 if (!id) {
@@ -19,66 +22,51 @@ if (!data && error) {
 ---
 
 <Layout title="Password Manager">
-  <main class="mx-auto max-w-[600px]">
-    <section class="flex gap-x-3 items-center mb-4">
-      <a href={detailsUrlPage} class="hover:bg-slate-700 p-2 rounded-full">
-        <ArrowLeftIcon />
-      </a>
-
-      <h1>{data.url}</h1>
-    </section>
-    <section class="bg-zinc-800 rounded-md p-6">
-      <form action={`/api/passwords/${id}`} method="post">
-        <div
-          class="border-b border-b-zinc-600 mb-6 pb-6 grid grid-cols-2 gap-6"
-        >
-          <div class="grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="username">Usuario</Label>
-            <Input
-              type="text"
-              id="username"
-              name="username"
-              value={data.username}
-            />
-          </div>
-          <div class="grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="url">Sitio Web</Label>
-            <Input type="text" id="url" name="url" value={data.url} />
-          </div>
-          <div class="relative w-full max-w-sm items-center">
-            <div class="relative grid gap-1.5 ">
-              <Label htmlFor="password" >Contraseña</Label>
-              <Input
-                type="password"
-                id="password"
-                name="password"
-                value={data.password}
-              />
-            </div>
-            <div class="absolute bottom-2.5 right-2 flex items-center gap-x-2">
-              <button type="button" class="text-sm" id="showPasswordBtn"
-                >Mostrar</button
-              >
-            </div>
-          </div>
-          <div class="grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="note">Nota</Label>
-            <Input type="text" id="note" name="note" value={data.note} />
-          </div>
+  <Card className="w-full mx-auto max-w-[400px]">
+    <CardHeader>
+      <CardTitle>Actualizar Contraseña</CardTitle>
+    </CardHeader>
+    <CardContent>
+      <form
+        method="post"
+        action={`/api/passwords/${id}`}
+        autocomplete="off"
+      >
+        <div class="grid w-full max-w-sm items-center gap-1.5 mb-6">
+          <Label htmlFor="website">Sitio Web</Label>
+          <Input type="text" placeholder="example.com" id="website" name="url" defaultValue={data.url} />
         </div>
-        <div class="flex gap-x-2 justify-end">
-          <a
-            class="bg-zinc-800 hover:bg-red-800 hover:text-white text-red-400 py-2 px-4 rounded-md font-medium text-sm"
-            href={detailsUrlPage}>Cancelar</a
-          >
+        <div class="grid w-full max-w-sm items-center gap-1.5 mb-6">
+          <Label htmlFor="username">Usuario</Label>
+          <Input type="text" id="username" name="username" defaultValue={data.username} />
+        </div>
+        <div class="grid w-full max-w-sm items-center gap-1.5 mb-6 relative">
+          <div class="relative">
+            <Label htmlFor="password">Contraseña</Label>
+            <Input type="password" id="password" name="password" defaultValue={data.password} />
+          </div>
           <button
-            class="bg-sky-700 hover:bg-sky-600 text-white py-2 px-4 rounded-md font-medium text-sm"
-            type="submit">Guardar</button
+            type="button"
+            class="text-sm absolute bottom-2.5 right-2"
+            id="showPasswordBtn">Mostrar</button
           >
+        </div>
+        <div class="grid w-full max-w-sm items-center gap-1.5 mb-6">
+          <Label htmlFor="note">Nota (Opcional)</Label>
+          <Textarea placeholder="Escribe tus anotaciones aquí!" name="note" id="note" defaultValue={data.note} />
+        </div>
+        <div class="flex justify-end gap-x-2">
+          <a href={detailsUrlPage} class={buttonVariants({variant: "ghost"})}>Cancelar</a>
+          <Button type="submit" variant={"primary"}> Actualizar </Button>
         </div>
       </form>
-    </section>
-  </main>
+      <!-- {result?.error && (
+        <div>
+          <p>Ha ocurrido un error al intentar agregar una nueva contraseña. Por favor inténtelo más tarde.</p>
+        </div>
+      )} -->
+    </CardContent>
+  </Card>
 </Layout>
 
 <script>
