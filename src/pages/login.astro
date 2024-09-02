@@ -1,7 +1,7 @@
 ---
-import Input from "../components/ui/Input.astro";
-import Label from "../components/ui/Label.astro";
+import { Input } from "@/components/ui/input";
 import Layout from "../layouts/Layout.astro";
+import { Label } from "@/components/ui/label";
 ---
 
 <Layout title="Login - Password Manager">
@@ -14,13 +14,13 @@ import Layout from "../layouts/Layout.astro";
     <h1 class="text-2xl mb-8 text-center font-medium">Bienvenido de nuevo</h1>
 
     <form action="/api/auth/login" method="post" class="mb-12">
-      <div class="mb-4">
-        <Label label="Correo" forInput="email" />
+      <div class="grid w-full max-w-sm items-center gap-1.5 mb-6">
+        <Label htmlFor="email">Correo</Label>
         <Input type="email" id="email" name="email" />
       </div>
 
-      <div class="mb-8">
-        <Label label="Contraseña" forInput="password" />
+      <div class="grid w-full max-w-sm items-center gap-1.5 mb-6">
+        <Label htmlFor="password">Contraseña</Label>
         <Input type="password" name="password" id="password" />
       </div>
 

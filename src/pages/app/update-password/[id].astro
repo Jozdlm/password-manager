@@ -1,9 +1,9 @@
 ---
 import { actions } from "astro:actions";
 import ArrowLeftIcon from "../../../components/icons/ArrowLeftIcon.astro";
-import Input from "../../../components/ui/Input.astro";
-import Label from "../../../components/ui/Label.astro";
 import Layout from "../../../layouts/Layout.astro";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const { id } = Astro.params;
 if (!id) {
@@ -32,8 +32,8 @@ if (!data && error) {
         <div
           class="border-b border-b-zinc-600 mb-6 pb-6 grid grid-cols-2 gap-6"
         >
-          <div>
-            <Label label="Usuario" forInput="username" />
+          <div class="grid w-full max-w-sm items-center gap-1.5">
+            <Label htmlFor="username">Usuario</Label>
             <Input
               type="text"
               id="username"
@@ -41,13 +41,13 @@ if (!data && error) {
               value={data.username}
             />
           </div>
-          <div>
-            <Label label="Sitio Web" forInput="url" />
+          <div class="grid w-full max-w-sm items-center gap-1.5">
+            <Label htmlFor="url">Sitio Web</Label>
             <Input type="text" id="url" name="url" value={data.url} />
           </div>
-          <div class="relative">
-            <div class="relative">
-              <Label forInput="password" label="Contraseña" />
+          <div class="relative w-full max-w-sm items-center">
+            <div class="relative grid gap-1.5 ">
+              <Label htmlFor="password" >Contraseña</Label>
               <Input
                 type="password"
                 id="password"
@@ -55,14 +55,14 @@ if (!data && error) {
                 value={data.password}
               />
             </div>
-            <div class="absolute bottom-2 right-2 flex items-center gap-x-2">
+            <div class="absolute bottom-2.5 right-2 flex items-center gap-x-2">
               <button type="button" class="text-sm" id="showPasswordBtn"
                 >Mostrar</button
               >
             </div>
           </div>
-          <div>
-            <Label label="Nota" forInput="note" />
+          <div class="grid w-full max-w-sm items-center gap-1.5">
+            <Label htmlFor="note">Nota</Label>
             <Input type="text" id="note" name="note" value={data.note} />
           </div>
         </div>

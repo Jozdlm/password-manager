@@ -2,9 +2,9 @@
 import { actions } from "astro:actions";
 import ArrowLeftIcon from "../../../components/icons/ArrowLeftIcon.astro";
 import ClipboardIcon from "../../../components/icons/ClipboardIcon.astro";
-import Input from "../../../components/ui/Input.astro";
-import Label from "../../../components/ui/Label.astro";
 import Layout from "../../../layouts/Layout.astro";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const { id } = Astro.params;
 if (!id) {
@@ -40,18 +40,18 @@ if (deleteResult && !deleteResult.error) {
     </section>
     <section class="bg-zinc-800 rounded-md p-6 mb-8">
       <div class="border-b border-b-zinc-600 mb-6 pb-6 grid grid-cols-2 gap-6">
-        <div class="relative">
-          <div class="relative">
-            <Label label="Usuario" forInput="username" />
+        <div class="relative w-full max-w-sm items-center">
+          <div class="relative grid gap-1.5 ">
+            <Label htmlFor="username">Usuario</Label>
             <Input
               type="text"
               id="username"
               name="username"
-              readonly
+              readOnly
               value={data.username}
             />
           </div>
-          <div class="absolute bottom-[6px] right-2 flex items-center gap-x-2">
+          <div class="absolute bottom-2.5 right-2 flex items-center gap-x-2">
             <button
               class="rounded-full p-1 hover:bg-zinc-700"
               id="clipboardUsername"
@@ -70,18 +70,18 @@ if (deleteResult && !deleteResult.error) {
             >{websitePlaceholder}</a
           >
         </div>
-        <div class="relative">
-          <div class="relative">
-            <Label forInput="password" label="Contraseña" />
+        <div class="relative w-full max-w-sm items-center">
+          <div class="relative grid gap-1.5 ">
+            <Label htmlFor="password">Contraseña</Label>
             <Input
               type="password"
               id="password"
               name="password"
-              readonly
+              readOnly
               value={data.password}
             />
           </div>
-          <div class="absolute bottom-[6px] right-2 flex items-center gap-x-2">
+          <div class="absolute bottom-2.5 right-2 flex items-center gap-x-2">
             <button type="button" class="text-sm" id="showPasswordBtn"
               >Mostrar</button
             >
