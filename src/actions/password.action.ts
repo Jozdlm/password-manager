@@ -62,9 +62,22 @@ export const getPasswordById = defineAction({
 export const addPassword = defineAction({
   accept: "form",
   input: z.object({
-    url: z.string(),
-    username: z.string(),
-    password: z.string(),
+    url: z
+      .string({ message: "Por favor ingresa la URL del sitio web" })
+      .trim()
+      .url({ message: "Por favor ingresa una URL válida" }),
+    username: z
+      .string({ message: "Por favor ingresa un correo o nombre de usuario" })
+      .trim()
+      .min(6, {
+        message: "El email o usuario debe contener un mínimo de 5 carácteres",
+      }),
+    password: z
+      .string({ message: "Por favor ingresa una contraseña" })
+      .trim()
+      .min(6, {
+        message: "La contraseña debe tener un mínimo de 6 carácteres ",
+      }),
     note: z
       .string()
       .nullable()
