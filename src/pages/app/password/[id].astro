@@ -122,7 +122,7 @@ if (deleteResult && !deleteResult.error) {
       <form method="post" action={actions.deletePasswordById}>
         <input type="text" name="passwordId" value={id} hidden>
         <button
-          class={buttonVariants({variant: 'destructive'})}
+          class={buttonVariants({variant: 'outline'})}
           id="deleteButton"
           type="submit">Eliminar</button
         >
