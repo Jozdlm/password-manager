@@ -2,6 +2,32 @@ import { supabase } from "@/lib/supabase";
 import { defineAction, ActionError } from "astro:actions";
 import { z } from "astro:content";
 
+export const register = defineAction({
+  accept: "form",
+  input: z.object({
+    email: z
+      .string({ message: "El correo no puede estar vacío" })
+      .email({ message: "El correo proporcionado no es válido" }),
+    password: z
+      .string({ message: "El campo contraseña es requerido" })
+      .trim()
+      .min(6, {
+        message: "La contraseña debe contener un mínimo de 6 carácteres",
+      }),
+  }),
+  handler: async ({ email, password }) => {
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (error)
+      throw new ActionError({ code: "BAD_REQUEST", message: error.message });
+
+    return { success: true };
+  },
+});
+
 export const login = defineAction({
   accept: "form",
   input: z.object({

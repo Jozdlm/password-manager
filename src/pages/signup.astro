@@ -2,6 +2,15 @@
 import { Input } from "@/components/ui/input";
 import Layout from "../layouts/Layout.astro";
 import { Label } from "@/components/ui/label";
+import { actions } from "astro:actions";
+import { isInputError } from "astro:actions";
+
+const result = Astro.getActionResult(actions.register);
+if (result && !result.error) {
+  return Astro.redirect("/login");
+}
+
+const inputErrors = isInputError(result?.error) ? result.error.fields : {};
 ---
 
 <Layout title="Sign Up - Password Manager">
@@ -14,15 +23,29 @@ import { Label } from "@/components/ui/label";
 
     <h1 class="text-2xl mb-8 text-center font-medium">Crear una cuenta</h1>
 
-    <form action="/api/auth/register" method="post" class="mb-12">
+    <form action={actions.register} method="post" class="mb-12">
       <div class="grid w-full max-w-sm items-center gap-1.5 mb-6">
         <Label htmlFor="email">Correo</Label>
         <Input type="email" id="email" name="email" />
+        {
+          inputErrors.email && (
+            <p class="dark:text-red-400 text-sm">
+              {inputErrors.email.join(",")}
+            </p>
+          )
+        }
       </div>
 
       <div class="grid w-full max-w-sm items-center gap-1.5 mb-6">
         <Label htmlFor="password">Contraseña</Label>
-        <Input type="password" name="password" id="password" minLength={6} />
+        <Input type="password" name="password" id="password" />
+        {
+          inputErrors.password && (
+            <p class="dark:text-red-400 text-sm">
+              {inputErrors.password.join(",")}
+            </p>
+          )
+        }
       </div>
 
       <button
