@@ -89,6 +89,31 @@ export const addPassword = defineAction({
   },
 });
 
+export const updatePassword = defineAction({
+  accept: "form",
+  input: z.object({
+    id: z.string(),
+    url: z.string(),
+    username: z.string(),
+    password: z.string(),
+    note: z
+      .string()
+      .nullable()
+      .transform((val) => val ?? ""),
+  }),
+  handler: async ({ id, url, username, password, note }) => {
+    const { error } = await supabase
+      .from("passwords")
+      .update({ url, username, password, note })
+      .eq("id", id);
+
+    if (error)
+      throw new ActionError({ code: "BAD_REQUEST", message: error.message });
+
+    return { success: true };
+  },
+});
+
 export const deletePasswordById = defineAction({
   accept: "form",
   input: z.object({

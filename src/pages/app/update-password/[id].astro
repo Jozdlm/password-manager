@@ -9,14 +9,19 @@ import { Textarea } from "@/components/ui/textarea";
 
 const { id } = Astro.params;
 if (!id) {
-  return Astro.redirect('/');
+  return Astro.redirect("/");
 }
 
 const detailsUrlPage = `/app/password/${id}`;
 
-const {data, error} = await actions.getPasswordById(id);
+const { data, error } = await actions.getPasswordById(id);
 if (!data && error) {
   return Astro.redirect("/");
+}
+
+const result = Astro.getActionResult(actions.updatePassword);
+if (result && !result.error) {
+  return Astro.redirect("/app");
 }
 ---
 
@@ -26,23 +31,42 @@ if (!data && error) {
       <CardTitle>Actualizar Contraseña</CardTitle>
     </CardHeader>
     <CardContent>
-      <form
-        method="post"
-        action={`/api/passwords/${id}`}
-        autocomplete="off"
-      >
+      <form method="post" action={actions.updatePassword} autocomplete="off">
+        <Input
+          type="text"
+          name="id"
+          readOnly
+          defaultValue={data.id}
+          className="hidden"
+        />
         <div class="grid w-full max-w-sm items-center gap-1.5 mb-6">
           <Label htmlFor="website">Sitio Web</Label>
-          <Input type="text" placeholder="example.com" id="website" name="url" defaultValue={data.url} />
+          <Input
+            type="text"
+            placeholder="example.com"
+            id="website"
+            name="url"
+            defaultValue={data.url}
+          />
         </div>
         <div class="grid w-full max-w-sm items-center gap-1.5 mb-6">
           <Label htmlFor="username">Usuario</Label>
-          <Input type="text" id="username" name="username" defaultValue={data.username} />
+          <Input
+            type="text"
+            id="username"
+            name="username"
+            defaultValue={data.username}
+          />
         </div>
         <div class="grid w-full max-w-sm items-center gap-1.5 mb-6 relative">
           <div class="relative">
             <Label htmlFor="password">Contraseña</Label>
-            <Input type="password" id="password" name="password" defaultValue={data.password} />
+            <Input
+              type="password"
+              id="password"
+              name="password"
+              defaultValue={data.password}
+            />
           </div>
           <button
             type="button"
@@ -52,18 +76,20 @@ if (!data && error) {
         </div>
         <div class="grid w-full max-w-sm items-center gap-1.5 mb-6">
           <Label htmlFor="note">Nota (Opcional)</Label>
-          <Textarea placeholder="Escribe tus anotaciones aquí!" name="note" id="note" defaultValue={data.note} />
+          <Textarea
+            placeholder="Escribe tus anotaciones aquí!"
+            name="note"
+            id="note"
+            defaultValue={data.note}
+          />
         </div>
         <div class="flex justify-end gap-x-2">
-          <a href={detailsUrlPage} class={buttonVariants({variant: "ghost"})}>Cancelar</a>
+          <a href={detailsUrlPage} class={buttonVariants({ variant: "ghost" })}
+            >Cancelar</a
+          >
           <Button type="submit" variant={"primary"}> Actualizar </Button>
         </div>
       </form>
-      <!-- {result?.error && (
-        <div>
-          <p>Ha ocurrido un error al intentar agregar una nueva contraseña. Por favor inténtelo más tarde.</p>
-        </div>
-      )} -->
     </CardContent>
   </Card>
 </Layout>
