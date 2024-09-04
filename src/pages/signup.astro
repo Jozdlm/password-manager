@@ -48,6 +48,15 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
         }
       </div>
 
+      {
+        result?.error && !isInputError(result.error) && (
+          <p class="dark:text-red-400 text-sm mb-6 text-center">
+            Hemos tenido problemas para crear tu cuenta. Por favor inténtalo más
+            tarde!
+          </p>
+        )
+      }
+
       <button
         type="submit"
         class="bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-md font-medium text-sm w-full"
