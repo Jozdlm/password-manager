@@ -45,11 +45,17 @@ const isPrivateRoute = pathname.includes("/app");
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="text-white pt-6 bg-zinc-950">
+  <body class="dark:text-white dark:bg-zinc-950">
     {
-      isPrivateRoute 
-        ?  <AppLayout><slot /></AppLayout>  
-        : <WebLayout><slot /></WebLayout>
+      isPrivateRoute ? (
+        <AppLayout>
+          <slot />
+        </AppLayout>
+      ) : (
+        <WebLayout>
+          <slot />
+        </WebLayout>
+      )
     }
   </body>
 </html>
