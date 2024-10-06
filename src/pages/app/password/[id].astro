@@ -1,7 +1,5 @@
 ---
 import { actions } from "astro:actions";
-import ArrowLeftIcon from "../../../components/icons/ArrowLeftIcon.astro";
-import ClipboardIcon from "../../../components/icons/ClipboardIcon.astro";
 import Layout from "../../../layouts/Layout.astro";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,17 +9,18 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
+import { ArrowLeft, Clipboard } from "lucide-react";
 
 const { id } = Astro.params;
 if (!id) {
-  return Astro.redirect('/');
+  return Astro.redirect("/");
 }
 
 const updateUrlPage = `/app/update-password/${id}`;
 
-const {data, error} = await actions.getPasswordById(id);
+const { data, error } = await actions.getPasswordById(id);
 if (!data || error) {
   return Astro.redirect("/");
 }
@@ -33,7 +32,7 @@ if (URL.canParse(data.url)) {
 
 const deleteResult = Astro.getActionResult(actions.deletePasswordById);
 if (deleteResult && !deleteResult.error) {
-  return Astro.redirect('/app');
+  return Astro.redirect("/app");
 }
 ---
 
@@ -43,9 +42,10 @@ if (deleteResult && !deleteResult.error) {
       <CardTitle className="flex items-center gap-x-4">
         <a
           type="button"
-          class={buttonVariants({variant: "ghost", size: 'icon'})}
-          href="/">
-          <ArrowLeftIcon />
+          class={buttonVariants({ variant: "ghost", size: "icon" })}
+          href="/"
+        >
+          <ArrowLeft className="w-4 h-4" />
         </a>
         <p>{websitePlaceholder}</p>
       </CardTitle>
@@ -53,7 +53,7 @@ if (deleteResult && !deleteResult.error) {
     <CardContent>
       <div class="grid grid-cols-2 gap-6">
         <div class="relative w-full max-w-sm items-center">
-          <div class="relative grid gap-1.5 ">
+          <div class="relative grid gap-1.5">
             <Label htmlFor="username">Usuario</Label>
             <Input
               type="text"
@@ -68,7 +68,7 @@ if (deleteResult && !deleteResult.error) {
               class="rounded-full p-1 hover:bg-zinc-700"
               id="clipboardUsername"
             >
-              <ClipboardIcon />
+              <Clipboard className="w-4 h-4" />
             </button>
           </div>
         </div>
@@ -83,7 +83,7 @@ if (deleteResult && !deleteResult.error) {
           >
         </div>
         <div class="relative w-full max-w-sm items-center">
-          <div class="relative grid gap-1.5 ">
+          <div class="relative grid gap-1.5">
             <Label htmlFor="password">Contraseña</Label>
             <Input
               type="password"
@@ -101,7 +101,7 @@ if (deleteResult && !deleteResult.error) {
               class="rounded-full p-1 hover:bg-zinc-700"
               id="clipboardPassword"
             >
-              <ClipboardIcon />
+              <Clipboard className="w-4 h-4" />
             </button>
           </div>
         </div>
@@ -112,24 +112,28 @@ if (deleteResult && !deleteResult.error) {
           </p>
         </div>
       </div>
-      {deleteResult?.error && (
-        <section class="bg-red-950 text-red-300 p-3 rounded text-center">
-          <p>Se ha producido un error al intentar eliminar la contraseña. Por favor inténtalo más tarde.</p>
-        </section>
-      )}
+      {
+        deleteResult?.error && (
+          <section class="bg-red-950 text-red-300 p-3 rounded text-center">
+            <p>
+              Se ha producido un error al intentar eliminar la contraseña. Por
+              favor inténtalo más tarde.
+            </p>
+          </section>
+        )
+      }
     </CardContent>
     <CardFooter className="flex gap-x-2 justify-end">
       <form method="post" action={actions.deletePasswordById}>
-        <input type="text" name="passwordId" value={id} hidden>
+        <input type="text" name="passwordId" value={id} hidden />
         <button
-          class={buttonVariants({variant: 'outline'})}
+          class={buttonVariants({ variant: "outline" })}
           id="deleteButton"
           type="submit">Eliminar</button
         >
       </form>
-      <a
-        class={buttonVariants({variant: 'primary'})}
-        href={updateUrlPage}>Editar</a
+      <a class={buttonVariants({ variant: "primary" })} href={updateUrlPage}
+        >Editar</a
       >
     </CardFooter>
   </Card>
