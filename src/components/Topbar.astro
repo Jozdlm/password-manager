@@ -1,6 +1,6 @@
 ---
-import { buttonVariants } from "./ui/button";
-import UserMenu from "./UserMenu.astro";
+import { actions } from "astro:actions";
+import { Button, buttonVariants } from "./ui/button";
 ---
 
 <div class="my-6 flex justify-between items-end">
@@ -10,5 +10,9 @@ import UserMenu from "./UserMenu.astro";
       <a href="/" class={buttonVariants({ variant: "link" })}>Inicio</a>
     </nav>
   </div>
-  <UserMenu />
+  <div>
+    <form method="post" action={actions.logout}>
+      <Button variant={"ghost"} type="submit">Cerrar Sesión</Button>
+    </form>
+  </div>
 </div>
